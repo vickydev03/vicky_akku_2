@@ -1,0 +1,62 @@
+# version: "3.9"
+services:
+  backend:
+    build: .
+    container_name: backend
+    image: ajaysingh24/vickyakku:latest
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    env_file:
+      - .docker.env
+    environment:
+      - INNGEST_DEV_SERVER_URL=http://inngest:8288
+      - INNGEST_BASE_URL=http://inngest:8288
+      - INNGEST_DEV=http://inngest:8288
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+  inngest:
+    # Use the official Inngest Docker image from Docker Hub
+    image: inngest/inngest:latest
+    ports:
+      # Expose the Dev Server UI on your host machine
+      - "8288:8288"
+    command:
+      - "inngest"
+      - "dev"
+      - "-u"
+      - "http://backend:3000/api/inngest"
+
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+
+volumes:
+  redis-data:
+  user-db-data:
+    driver: local

@@ -1,0 +1,5 @@
+src/app/(dashboard)/dashboard/page.tsx(2,27): error TS1261: Already included file name 'D:/2026/vicky_akku_part_2/fronted/src/modules/dashboard/view/DashboardView.tsx' differs from file name 'D:/2026/vicky_akku_part_2/fronted/src/modules/dashboard/view/DashBoardView.tsx' only in casing.
+  The file is in the program because:
+    Imported via "@/modules/dashboard/view/DashboardView" from file 'D:/2026/vicky_akku_part_2/fronted/src/app/(dashboard)/dashboard/page.tsx'
+    Matched by include pattern '**/*.tsx' in 'D:/2026/vicky_akku_part_2/fronted/tsconfig.json'
+src/modules/dashboard/view/StudentsView.tsx(18,10): error TS2305: Module '"../component/StudentColumn"' has no exported member 'studentsColumn'.

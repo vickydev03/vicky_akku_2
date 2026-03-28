@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   
+  password  String?
+  phone     String @unique
+  role      Role     @default(STUDENT)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  lastLoginAt DateTime @default(now())
+  
+  orders      Order[]
+  enrollments Enrollment[]
+  userSubscription UserSubscription[]
+  tutorialAccess TutorialAccess[]
+}
+
+model Location {
+  id        String   @id @default(uuid())
+  name      String   
+  address   String
+  city      String
+  state     String
+  country   String
+  pincode   String?
+  place     String?
+  
+  createdAt DateTime @default(now())
+  image     String   @default("/image/1.png")
+
+  workshops Workshop[]
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  userId   String
+  amount   Float
+  productId   String
+  status   OrderStatus
+
+  razorpayOrderId   String?
+  razorpayPaymentId String?  
+  razorpaySignature String?
+  
+  paymentId String?
+  productType    String
+  createdAt DateTime    @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  userId   String
+  workshopId String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id],onDelete: Cascade)
+  workshop Workshop @relation(fields: [workshopId], references: [id] ,onDelete: Cascade)
+    
+  @@unique([userId, workshopId])
+}
+
+model Workshop {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  isActive    Boolean @default(true)
+  description String 
+  thumbnail   String
+  price       Float
+  eventDate   DateTime
+  createdAt   DateTime @default(now())
+  locationId  String
+  location    Location @relation(fields: [locationId],references: [id] ,onDelete: Cascade)
+  // order        Order[]
+  enrollment  Enrollment[]
+}
+
+model Video {
+  id          String   @id @default(uuid())
+  tutorialId String
+  duration   String?
+  title       String
+  thumbnailUrl String?
+  videoKey String
+  size   Int
+  order       Int
+  createdAt  DateTime @default(now())
+  tutorial Tutorials @relation(fields: [tutorialId], references: [id],onDelete: Cascade)
+  @@index([tutorialId])
+}
+
+enum MonetizationType {
+  PURCHASE
+  AFFILIATE
+}
+
+model Tutorials {
+  id          String   @id @default(uuid())
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  title       String?
+  duration    Int?
+  thumbnail   String
+  price       Int?  
+  
+  description String
+  video       Video[]
+  tutorialAccess TutorialAccess[]
+}
+
+model TutorialAccess {
+  id String @id @default(uuid())
+  createdAt DateTime
+  
+  userId String
+  tutorialId String
+  
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  tutorial Tutorials @relation(fields: [tutorialId],references: [id],onDelete: Cascade)
+  @@unique([userId,tutorialId])
+}
+
+model ClassTag {
+  id      String @id @default(cuid())
+  name    String @unique
+  
+  classes RegularClass[]
+}
+
+model RegularClass {
+  
+  id            String              @id @default(cuid())
+  title         String
+  description   String
+  thumbnail     String
+  price         Float
+
+  City          String
+  startDate   DateTime
+  endDate     DateTime
+  
+  createdAt     DateTime            @default(now())
+  isActive      Boolean             @default(true)
+  perfectFor  ClassTag[]
+  subscriptions UserSubscription[]
+
+
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model UserSubscription {
+  id          String   @id @default(cuid())
+
+  user        User     @relation(fields: [userId], references: [id],onDelete: Cascade)
+  userId      String
+  
+  class       RegularClass @relation(fields: [classId], references: [id],onDelete: Cascade)
+  classId     String
+  
+  status      SubscriptionStatus @default(ACTIVE)
+
+  createdAt   DateTime @default(now())
+}

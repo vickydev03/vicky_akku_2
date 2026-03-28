@@ -1,0 +1,20 @@
+# node_modules
+# .git
+# .env
+# dist
+# Dockerfile
+# docker-compose.yml
+
+node_modules
+.git
+.gitignore
+.env
+Dockerfile
+docker-compose.yml
+logs
+tmp
+coverage
+dist
+*.log
+.vscode
+.idea

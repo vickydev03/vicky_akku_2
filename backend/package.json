@@ -1,0 +1,31 @@
+{
+  "name": "app",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1001.0",
+    "@aws-sdk/s3-request-presigner": "^3.1001.0",
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/jwt": "^1.4.0",
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "bcryptjs": "^3.0.3",
+    "bullmq": "^5.67.3",
+    "dev": "^0.1.3",
+    "elysia": "latest",
+    "inngest": "^3.51.0",
+    "inngest-cli": "^1.16.2",
+    "ioredis": "^5.9.2",
+    "prisma": "^7.3.0",
+    "razorpay": "^2.9.6",
+    "twilio": "^5.12.1"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}
