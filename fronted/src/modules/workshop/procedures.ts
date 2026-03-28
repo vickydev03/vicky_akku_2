@@ -114,7 +114,7 @@ export const workshopRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       console.log(input, "from ajay to test");
       try {
-        new Promise((resolve) => setTimeout(resolve, 12000));
+        // new Promise((resolve) => setTimeout(resolve, 12000));
         const res = await axios.get(
           `${process.env.BASE_API}/v1/workshop?type=${input.type}&page=${input.page}&limit=${input.limit}&location=${input.location}`,
           {
