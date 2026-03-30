@@ -2,6 +2,7 @@
 // import Image from "next/image";
 // import React from "react";
 
+
 // function ClassDetails({className="w-full mt-48 mx-auto hidden md:block"}:{className?:string}) {
 //   return (
 //     <div className={className}>
@@ -29,7 +30,8 @@
 //                 that’s warm, welcoming, and full of energy.
 //               </p>
 //               <Button className="bg-primary w-fit uppercase px-4 py-2 cursor-pointer rounded-full">
-//                 view details
+<Link href={"/regula-classes"}>
+//                 view details </Link>
 //               </Button>
 //             </div>
 //           </div>
@@ -47,7 +49,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-
+import Link from "next/link";
 function ClassDetails({
   className = "w-full mt-48 mx-auto hidden md:block",
 }: {
