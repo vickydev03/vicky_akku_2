@@ -143,9 +143,7 @@ export const userColumn: ColumnDef<getUsers[number]>[] = [
             <DropdownMenuContent>
               <DropdownMenuLabel>Manage Room</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={(e) => handleDelete(e)}>
-                Delete
-              </DropdownMenuItem>
+     
               <DropdownMenuItem >
                 <Link href={`/dashboard/users/${row.original.id}`}>
                   View Detail's
