@@ -30,8 +30,7 @@
 //                 that’s warm, welcoming, and full of energy.
 //               </p>
 //               <Button className="bg-primary w-fit uppercase px-4 py-2 cursor-pointer rounded-full">
-<Link href={"/regula-classes"}>
-//                 view details </Link>
+
 //               </Button>
 //             </div>
 //           </div>
@@ -127,7 +126,7 @@ function ClassDetails({
 
               <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.96 }}>
                 <Button className="bg-primary w-fit uppercase px-4 py-2 cursor-pointer rounded-full">
-                  view details
+                  <Link href={"/regula-classes"}>             view details </Link>
                 </Button>
               </motion.div>
             </motion.div>
